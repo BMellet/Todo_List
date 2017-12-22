@@ -5,6 +5,7 @@ var uglify = require('gulp-uglify');
 var browserSync = require('browser-sync');
 var cleanCSS = require('gulp-clean-css');
 var mergeStream = require('merge-stream');
+var moment = require('moment');
 
 gulp.task('style',function(){
     gulp.src('./node_modules/materialize-css/dist/css/materialize.min.css')
@@ -19,6 +20,11 @@ gulp.task('scriptJS',function(){
                     .pipe(gulp.dest('./dist/js'));
             return mergeStream(jquery, materialize);
 });
+
+gulp.task('moment',function(){
+    gulp.src('./node_modules/moment/min/moment.min.js')
+        .pipe(gulp.dest('./dist/js/'));
+})
 
 gulp.task('sass',function(){
      return gulp.src('./assets/scss/*.scss')
@@ -40,7 +46,7 @@ gulp.task('browserSync',function(){
     })
 });
 
-gulp.task('watch',['sass','uglify','browserSync','style','scriptJS'],function(){
+gulp.task('watch',['sass','uglify','browserSync','style','scriptJS', 'moment'],function(){
     gulp.watch('./assets/scss/*.scss',['sass']).on('change',browserSync.reload);
     gulp.watch('./assets/js/*.js',['uglify']).on('change',browserSync.reload);
     gulp.watch('./*.html').on('change',browserSync.reload);
