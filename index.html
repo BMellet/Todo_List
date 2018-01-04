@@ -11,17 +11,17 @@
     <title>To-do List</title>
 </head>
 <body>
+    <div class="page_title"><h3>To Do List</h3></div>
         <div class="row">
-            <div class="page_title"><h3>To Do List</h3></div>
             <div class="col s1">
                 <ul id="slide-out" class="side-nav">
                     <li><div class="user-view">
                         <div class="background">
                         </div>
                     </div></li>
-                    <li><a href="#!">First list</a></li>
-                    <li><a href="#!">Second list</a></li>
-                    <li><a href="#!">Third list</a></li>
+                    <li><a id="list1">First list</a></li>
+                    <li><a id="list2">Second list</a></li>
+                    <li><a id="list3">Third list</a></li>
                     <li><div class="divider"></div></li>
                     <li><a href="#!">Add a list</a></li>
                 </ul>
@@ -43,24 +43,30 @@
             <div class="col s8">
 
                 <div class="row">
-                        <form class="input-field col s4">
+                        <div class="input-field col s4">
                                 <i class="material-icons prefix">title</i>
                                 <input id="input_title" type="text" class="validate">
-                                <label for="icon_prefix">Add List itle</label>
-                                <button  id="button" class=" btn1 btn waves-effect waves-light col s10"  name="action">
+                                <label for="icon_prefix">Add List title</label>
+                                <button  id="button_title" class=" btn1 btn waves-effect waves-light col s10"  name="title">
                                 <i class="material-icons">add</i>
                                 </button>
-                        </form>
+                        </div>
+                        <div class="col s4">
+                            <div class="row"></div>
+                            <div class="row"></div>
+                            <div class="row"></div>
+                            <a class=" save-button waves-effect waves-light btn-large"><i class="material-icons right">save</i>save list</a>
+                        </div>
                 </div>
                 <div class="row"></div>
                 <div class="row">
                         
 
-                    <form class="input-field col s8">
+                    <form class="input-field disabled col s8" id="task_form">
                         <i class="material-icons prefix">check_box</i>
-                        <input id="input" type="text" class="validate">
+                        <input disabled id="input" type="text" class="validate">
                         <label for="icon_prefix">Add new task</label>
-                        <button  id="button" class=" btn1 btn waves-effect waves-light col s10"  name="action">
+                        <button  id="button" class=" btn1 btn waves-effect waves-light col s10"  name="task">
                         <i class="material-icons">send</i>
                         </button> 
                     </form>
@@ -76,9 +82,10 @@
             </div>
             <div class="col s8">
                 <div class="row">
-                        <div id="liste" class="collection col s12">
-    
-                        </div>
+                    <div id="liste" class="collection col s12">
+                        <a class="collection-item " id="title_list">No Title list</a>
+
+                    </div>
                 </div>       
             </div>
             <div class="col s2"></div>

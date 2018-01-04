@@ -36,7 +36,7 @@ gulp.task('sass',function(){
 
 gulp.task('uglify',function(){
     gulp.src('./assets/js/*.js')
-        .pipe(uglify())
+        // .pipe(uglify())
         .pipe(gulp.dest('./dist/js/'));
 });
 
