@@ -1,18 +1,17 @@
 //variables
 var btn = document.getElementById("button");
 var liste = document.getElementById("liste");
+var title = document.getElementById("input_title")
 var nb = 0;
-var done = document.getElementById("case1");
-var notDone = document.getElementById("case2");
+var selection = document.getElementById("select");
 var stor = localStorage;
 var filtre = document.getElementsByClassName("task");
 
 
 //listeners
 
+selection.addEventListener("change",selector)
 btn.addEventListener("click", add)
-done.addEventListener("click",case1)
-notDone.addEventListener("click",case2)
 
 //affichage de tache déjà présente dans le local storage
 
@@ -22,7 +21,18 @@ for(var i = 0;i<localStorage.length;i++)
     var donnees = localStorage.getItem(tache);
     var tabl = JSON.parse(donnees);
     var date = tabl.d;
+    var modifDate = tabl.m;
+    var valid = tabl.a;
     console.log(date);
+
+      //BOUTTON SUPPRIMER//
+      var bouton = document.createElement("a");
+      bouton.className = ("btn2"+" btn"+" btn-small"+" waves-effect"+" waves-light"+" red");
+      var icone = document.createElement("i");
+      icone.className = ("material-icons");
+      icone.innerHTML = "clear";
+      bouton.appendChild(icone);
+  
     
 
    
@@ -36,7 +46,7 @@ for(var i = 0;i<localStorage.length;i++)
     var createDate = document.createElement("span") 
     createDate.className = ("date");
     //ajout de la classe materialize a l'ancre
-    ancre.className = "collection-item";
+    ancre.className = "collection-item wrap";
     
     NewBox.type = "checkbox";
     NewBox.className = "filled-in";
@@ -44,19 +54,33 @@ for(var i = 0;i<localStorage.length;i++)
     NewBox.id = "task"+i;
     label.setAttribute("for","task"+i);
     label.innerHTML = tache;
-    createDate.innerHTML = date;
+
+    if(!modifDate)
+    {
+        createDate.innerHTML = "creation: "+date;
+    }
+    else
+    {
+        createDate.innerHTML = "Last modification: "+date;      
+    }
     ancre.appendChild(NewBox);
     ancre.appendChild(label);
     ancre.appendChild(createDate);
+    ancre.appendChild(bouton);
     liste.appendChild(ancre);
+    NewBox.addEventListener("change",validate);
+    bouton.addEventListener("click",suppr);
+    if(valid == true)
+    {
+        NewBox.checked = true;
+    }
+
+    nb=i;
 
 }
 
-function LocalCheck ()
-{
-}
 
-function add ()
+function add (evt)
 {
     var verif = 0;
     var input = document.getElementById("input");
@@ -83,18 +107,18 @@ function add ()
         }
         else
         {  
+            nb++
             
             var date = moment().format('lll');
-            nb++
-            console.log(date)
-            var obj = {};
-            obj.d = date
-            console.log(obj);
-            var object = JSON.stringify(obj);
-            
-            localStorage.setItem(tache,object);
 
-            input.value="";
+            //BOUTTON SUPPRIMER//
+            var bouton = document.createElement("a");
+            bouton.className = ("btn2"+" btn"+" btn-small"+" waves-effect"+" waves-light"+" red");
+            var icone = document.createElement("i");
+            icone.className = ("material-icons");
+            icone.innerHTML = "clear";
+            bouton.appendChild(icone);
+        
             
             //creation de l'ancre pour la nouvelle tache
             var ancre = document.createElement("a");
@@ -106,7 +130,8 @@ function add ()
             var createDate = document.createElement("span") 
             createDate.className = ("date");
             //ajout de la classe materialize a l'ancre
-            ancre.className = "collection-item";
+            ancre.className = "collection-item"+" wrap";
+
             
             NewBox.type = "checkbox";
             NewBox.className = "filled-in";
@@ -114,83 +139,161 @@ function add ()
             NewBox.id = "task"+nb;
             label.setAttribute("for","task"+nb);
             label.innerHTML = tache;
-            createDate.innerHTML = date
+            createDate.innerHTML = "creation: "+date;
             ancre.appendChild(NewBox);
             ancre.appendChild(label);
             ancre.appendChild(createDate);
+            ancre.appendChild(bouton);
             liste.appendChild(ancre);
+            
+            //add listener//
+            
+            NewBox.addEventListener("change",validate);
+
+            bouton.addEventListener("click",suppr);
+            
+            
+            var test = NewBox.checked;
+            console.log(date)
+            var obj = {};
+            obj.d = date
+            obj.a = test
+            console.log(obj);
+            var object = JSON.stringify(obj);
+            
+            localStorage.setItem(tache,object);
+            
+            input.value="";
         }
     }
     verif=0;
+    evt.preventDefault();
+}
 
+ /////////////////////////FILTRE/////////////////////////////
 
+function selector()
+{
+    console.log("je suis dedans ");
+    var filtre = document.getElementsByClassName("task");
+    var option = selection.value;
+    console.log(option);
+    switch (option)
+    {
+        case "1":
+        {
+            for(var i = 0;i<localStorage.length;i++)
+            {
+                    filtre[i].parentElement.style.display="";    
+
+            }
+            break;
+
+        }
+        case "2":
+        {
+            for(var i = 0;i<localStorage.length;i++)
+            {
+                console.log(filtre[i].checked);
+
+                if(filtre[i].checked == true)
+                {
+                    filtre[i].parentElement.style.display="none";    
+                    
+                }
+                else
+                {
+                    filtre[i].parentElement.style.display=""; 
+                }
+            }
+            break;
             
+
+        }
+        case "3":
+        {
+            for(var j = 0;j<localStorage.length;j++)
+            {   
+                if(!filtre[j].checked)
+                {
+                    filtre[j].parentElement.style.display="none";  
+
+                }
+                else
+                {
+                    filtre[j].parentElement.style.display=""; 
+                }
+            }
+            break;
+            
+        }
+    }
+        
+
+}
+
+// validate //
+
+function validate()
+{
+    var modif = moment().format('lll');
+    var val = this.checked;
+    var tid = this.id;
+    var length = tid.length;
+    var chiffre = tid.substring(length -1, length);
+    console.log(chiffre);
+
+    var tache = localStorage.key(chiffre);
+    var donnees = localStorage.getItem(tache);
+    var tabl = JSON.parse(donnees);
+    var valid = tabl.a;
+
+    //modif date //
+
+
+    valid = val;
+    tabl.m = modif;
+    tabl.a = valid ;
+
+    
+    
+    var object = JSON.stringify(tabl);
+    localStorage.setItem(tache,object);  
     
 
+    
 }
 
+//////////////////////SUPPRIMER TACHE///////////////////////////
 
-function case1 ()
+function suppr ()
 {
-    if(done.checked)
+    confirm("Do you really want to delete this task ?");
+
+    if(true)
     {
-        for(var i =0;i<nb;i++)
-        {
-            if(filtre[i].checked)
-            {
-                var pa = filtre[i].parentElement;
-                pa.style.display="none";    
-                
-            }
-        }
+        var DelTask = this.parentElement;
+        var child = DelTask.firstChild;
+        var tid = child.id;
+        var length = tid.length;
+        var chiffre = tid.substring(length -1, length);
+        console.log(chiffre);
+        var tasktodel = localStorage.key(chiffre);
+        localStorage.removeItem(tasktodel);
 
-
-    }
-    else
-    {
-        for(var i =0;i<nb;i++)
-        {
-            if(filtre[i].checked)
-            {
-                filtre[i].parentElement.style.display="";    
-                
-            }
-        }
-
-
+        liste.removeChild(DelTask);
 
     }
 }
 
-function case2 ()
-{
-    var filtre = document.getElementsByClassName("task");
-    if(notDone.checked)
-    {
-        for(var j =0;j<nb;j++)
-        {
-            if(!filtre[j].checked)
-            {
-                filtre[j].parentElement.style.display="none";  
+// list materialize activation //
 
-            }
-        }
+$(document).ready(function(){
+    $('select').material_select();
+    $(".button-collapse").sideNav();
+
+});
 
 
-    }
-    else
-    {
-        for(var j =0;j<nb;j++)
-        {
-            if(!filtre[j].checked)
-            {     
-                filtre[j].parentElement.style.display="";
-            }
-        }
-
-
-
-    }
-}
 
 
