@@ -1,3 +1,11 @@
+$(document).ready(function(){
+    $('select').material_select();
+    $(".button-collapse").sideNav();
+    
+
+});
+
+
 //variables
 var num = 1;
 var btn = document.getElementById("button");
@@ -269,84 +277,73 @@ function suppr ()
 
 // list materialize activation //
 
-$(document).ready(function(){
-    $('select').material_select();
-    $(".button-collapse").sideNav();
-          
-
     
-    function save()
-    {
+    
+    // //affichage de taches déjà présentes dans le local storage
+    
+    // for(var i = 0;i<localStorage.length;i++)
+    // {
+    //     var tache = localStorage.key(i);
+    //     var donnees = localStorage.getItem(tache);
+    //     var tabl = JSON.parse(donnees);
+    //     var date = tabl.d;
+    //     var modifDate = tabl.m;
+    //     var valid = tabl.a;
+    //     console.log(date);
+    
+    //     //BOUTTON SUPPRIMER//
+    //     var bouton = document.createElement("a");
+    //     bouton.className = ("btn2"+" btn"+" btn-small"+" waves-effect"+" waves-light"+" red");
+    //     var icone = document.createElement("i");
+    //     icone.className = ("material-icons");
+    //     icone.innerHTML = "clear";
+    //     bouton.appendChild(icone);
+    
         
-    }
     
-});
-
-
-
-
-// //affichage de taches déjà présentes dans le local storage
-
-// for(var i = 0;i<localStorage.length;i++)
-// {
-//     var tache = localStorage.key(i);
-//     var donnees = localStorage.getItem(tache);
-//     var tabl = JSON.parse(donnees);
-//     var date = tabl.d;
-//     var modifDate = tabl.m;
-//     var valid = tabl.a;
-//     console.log(date);
-
-//     //BOUTTON SUPPRIMER//
-//     var bouton = document.createElement("a");
-//     bouton.className = ("btn2"+" btn"+" btn-small"+" waves-effect"+" waves-light"+" red");
-//     var icone = document.createElement("i");
-//     icone.className = ("material-icons");
-//     icone.innerHTML = "clear";
-//     bouton.appendChild(icone);
-
+    
+    //     //creation de l'ancre pour la nouvelle tache
+    //     var ancre = document.createElement("a");
+    //     //creation de la checkbox pour la nouvelle tache 
+    //     var NewBox = document.createElement("input");
+    //     // ajout du label contenant la tache
+    //     var label = document.createElement("label");
+    //     //ajout du span contenant la date de création
+    //     var createDate = document.createElement("span") 
+    //     createDate.className = ("date");
+    //     //ajout de la classe materialize a l'ancre
+    //     ancre.className = "collection-item wrap";
+        
+    //     NewBox.type = "checkbox";
+    //     NewBox.className = "filled-in";
+    //     NewBox.className += " task";
+    //     NewBox.id = "task"+i;
+    //     label.setAttribute("for","task"+i);
+    //     label.innerHTML = tache;
+    
+    //     if(!modifDate)
+    //     {
+    //         createDate.innerHTML = "creation: "+date;
+    //     }
+    //     else
+    //     {
+    //         createDate.innerHTML = "Last modification: "+date;      
+    //     }
+    //     ancre.appendChild(NewBox);
+    //     ancre.appendChild(label);
+    //     ancre.appendChild(createDate);
+    //     ancre.appendChild(bouton);
+    //     liste.appendChild(ancre);
+    //     NewBox.addEventListener("change",validate);
+    //     bouton.addEventListener("click",suppr);
+    //     if(valid == true)
+    //     {
+    //         NewBox.checked = true;
+    //     }
+    
+    //     nb=i;
+    
+    // }
     
 
 
-//     //creation de l'ancre pour la nouvelle tache
-//     var ancre = document.createElement("a");
-//     //creation de la checkbox pour la nouvelle tache 
-//     var NewBox = document.createElement("input");
-//     // ajout du label contenant la tache
-//     var label = document.createElement("label");
-//     //ajout du span contenant la date de création
-//     var createDate = document.createElement("span") 
-//     createDate.className = ("date");
-//     //ajout de la classe materialize a l'ancre
-//     ancre.className = "collection-item wrap";
-    
-//     NewBox.type = "checkbox";
-//     NewBox.className = "filled-in";
-//     NewBox.className += " task";
-//     NewBox.id = "task"+i;
-//     label.setAttribute("for","task"+i);
-//     label.innerHTML = tache;
-
-//     if(!modifDate)
-//     {
-//         createDate.innerHTML = "creation: "+date;
-//     }
-//     else
-//     {
-//         createDate.innerHTML = "Last modification: "+date;      
-//     }
-//     ancre.appendChild(NewBox);
-//     ancre.appendChild(label);
-//     ancre.appendChild(createDate);
-//     ancre.appendChild(bouton);
-//     liste.appendChild(ancre);
-//     NewBox.addEventListener("change",validate);
-//     bouton.addEventListener("click",suppr);
-//     if(valid == true)
-//     {
-//         NewBox.checked = true;
-//     }
-
-//     nb=i;
-
-// }
